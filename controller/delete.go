@@ -1,23 +1,19 @@
 package controller
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
-	"go-netdisk/common"
-	"go-netdisk/models"
 	"go-netdisk/utils"
-	"net/http"
+	"strconv"
 )
 
 func Delete(ctx *gin.Context) {
 	userID := utils.GetUserID(ctx)
-	fileID := ctx.Query("id")
-	if err := common.DB().Where("id = ?", fileID).Delete(&models.File{}).Error; err != nil {
-		utils.FailWithMessage(ctx, http.StatusInternalServerError, err.Error())
-		return
-	}
-	if err := common.DB().Where("user_id=?", userID).
-		Where("file_id=?", fileID).Delete(&models.UserFile{}).Error; err != nil {
-		utils.FailWithMessage(ctx, http.StatusInternalServerError, err.Error())
+	fileID := ctx.Query("file_id")
+	i, _ := strconv.Atoi(fileID)
+	fmt.Println("delete:", userID, i)
+	if err := utils.RemoveFile(userID, i); err != nil {
+		utils.FailServerErr(ctx, err)
 		return
 	}
 	utils.OkWithData(ctx, nil, "success")

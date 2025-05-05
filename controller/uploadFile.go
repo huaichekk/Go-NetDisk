@@ -15,7 +15,7 @@ import (
 	"os"
 )
 
-const STORAGE_PATH = "./uploads"
+const STORAGE_PATH = "./uploads/"
 
 type FileData struct {
 	FileName string `json:"file_name"`
@@ -50,7 +50,7 @@ func UploadFile(c *gin.Context) {
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			// 写入文件
-			filePath := fmt.Sprintf("%s/%s", STORAGE_PATH, md5Str)
+			filePath := fmt.Sprintf("%s%s", STORAGE_PATH, md5Str)
 			if err := os.WriteFile(filePath, decoded, 0644); err != nil {
 				utils.FailWithMessage(c, http.StatusInternalServerError,
 					fmt.Sprintf("文件保存失败:%s", err.Error()))

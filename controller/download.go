@@ -15,6 +15,6 @@ func Download(ctx *gin.Context) {
 		utils.FailServerErr(ctx, err)
 		return
 	}
-	filepath := STORAGE_PATH + "/" + file.Hash
+	filepath := STORAGE_PATH + file.Hash
 	ctx.File(filepath)
 }

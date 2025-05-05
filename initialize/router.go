@@ -25,9 +25,11 @@ func initRouter(r *gin.Engine) {
 			files.GET("", controller.Files)
 			files.DELETE("/delete", controller.Delete)
 			files.GET("/download", controller.Download)
+			files.GET("/think", controller.ThinkFile)
 			//http://localhost:8080/api/files/download?file_id=3
 		}
 		//authApi.GET("/files", controller.Files)
 		authApi.POST("/uploadfile", controller.UploadFile)
+		authApi.POST("/chat", controller.Chat)
 	}
 }
